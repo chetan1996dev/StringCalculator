@@ -60,5 +60,13 @@ RSpec.describe StringCalculator do
     it 'handles multiple delimiters in complex cases' do
       expect(calculator.add("//[*][%][#]\n1*2%3#4")).to eq(10)
     end
+
+    it 'raises an exception for negative numbers' do
+      expect { calculator.add("1,-2") }.to raise_error("negative numbers not allowed: -2")
+    end
+
+    it 'raises an exception with all negative numbers in the message' do
+      expect { calculator.add("1,-2,-3") }.to raise_error("negative numbers not allowed: -2, -3")
+    end
   end
 end
