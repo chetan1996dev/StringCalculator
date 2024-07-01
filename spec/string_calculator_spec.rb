@@ -32,5 +32,33 @@ RSpec.describe StringCalculator do
     it 'handles a string with trailing delimiter' do
       expect(calculator.add("1,2,3,")).to eq(6)
     end
+
+    it 'handles new lines between numbers' do
+      expect(calculator.add("1\n2,3")).to eq(6)
+    end
+
+    it 'supports different delimiters' do
+      expect(calculator.add("//;\n1;2")).to eq(3)
+    end
+
+    it 'handles a string with multiple delimiters' do
+      expect(calculator.add("1,2\n3")).to eq(6)
+    end
+
+    it 'supports different delimiters of any length' do
+      expect(calculator.add("//[***]\n1**2***3")).to eq(6)
+    end
+
+    it 'supports multiple different delimiters' do
+      expect(calculator.add("//[*][%]\n1*2%3")).to eq(6)
+    end
+
+    it 'supports multiple different delimiters with length more than one' do
+      expect(calculator.add("//[**][%%]\n1**2%%3")).to eq(6)
+    end
+
+    it 'handles multiple delimiters in complex cases' do
+      expect(calculator.add("//[*][%][#]\n1*2%3#4")).to eq(10)
+    end
   end
 end
